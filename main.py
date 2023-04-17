@@ -9,11 +9,11 @@ from typing import List
 
 class Company:
     
-    def __init__(self, name: str, occupation: str = None, address: str = None, web_page: str = None) -> None:
+    def __init__(self, name: str, occupation: str = "No information given ...", address: str = "No information given ...", web_page: str = "No information given ...") -> None:
         self.name: str = name
-        self.occupation: str = occupation or None
-        self.address: str = address or None
-        self.web_page: str = web_page or None
+        self.occupation: str = occupation or "No information given ..."
+        self.address: str = address or "No information given ..."
+        self.web_page: str = web_page or "No information given ..."
         
     def __str__(self) -> str:
         representation = f"Name: {self.name}\n"
@@ -32,10 +32,10 @@ class Company:
 
 class Spouse:
     
-    def __init__(self, name: str, birthday: str = None, notes: str = None) -> None:
+    def __init__(self, name: str, birthday: str = "No information given ...", notes: str = "No information given ...") -> None:
         self.name: str = name
-        self.birthday: str = birthday or None
-        self.notes: str = notes or None
+        self.birthday: str = birthday or "No information given ..."
+        self.notes: str = notes or "No information given ..."
         
     def __str__(self) -> str:
         representation = f"Name: {self.name}\n"
@@ -51,10 +51,10 @@ class Spouse:
 
 class Child:
     
-    def __init__(self, name: str, birthday: str = None, notes: str = None) -> None:
+    def __init__(self, name: str, birthday: str = "No information given ...", notes: str = "No information given ...") -> None:
         self.name: str = name
-        self.birthday: str = birthday or None
-        self.notes: str = notes or None
+        self.birthday: str = birthday or "No information given ..."
+        self.notes: str = notes or "No information given ..."
         
     def __str__(self) -> str:
         representation = f"Name: {self.name}\n"
@@ -69,30 +69,32 @@ class Child:
 
 
 class Contact:
-    def __init__(self, name: str, mobile_phone: str, company: Company = None, mobile_phone2: str = None, mobile_phone3: str = None, home_phone: str = None, office_phone: str = None, private_email1: str = None, private_email2: str = None, office_email: str = None, melody: str = None, other_address: str = None, birthday: str = None, notes: str = None, spouse: Spouse = None, children: List[Child] = None):
+    def __init__(self, name: str, mobile_phone: str, company: Company = None, mobile_phone2: str = "No information given ...", mobile_phone3: str = "No information given ...", home_phone: str = "No information given ...", office_phone: str = "No information given ...", private_email1: str = "No information given ...", private_email2: str = "No information given ...", office_email: str = "No information given ...", melody: str = "No information given ...", other_address: str = "No information given ...", birthday: str = "No information given ...", notes: str = "No information given ...", spouse: Spouse = None, children: List[Child] = list()) -> None:
         
         self.name: str = name
         self.mobile_phone: str = mobile_phone
         self.company: Company = company or None
-        self.mobile_phone2: str = mobile_phone2 or None
-        self.mobile_phone3: str = mobile_phone3 or None
-        self.home_phone: str = home_phone or None
-        self.office_phone: str = office_phone or None
-        self.private_email1: str = private_email1 or None
-        self.private_email2: str = private_email2 or None
-        self.office_email: str= office_email or None
-        self.melody: str = melody or None
-        self.other_address: str = other_address or None
-        self.birthday: str = birthday or None
-        self.notes: str = notes or None
+        self.mobile_phone2: str = mobile_phone2 or "No information given ..."
+        self.mobile_phone3: str = mobile_phone3 or "No information given ..."
+        self.home_phone: str = home_phone or "No information given ..."
+        self.office_phone: str = office_phone or "No information given ..."
+        self.private_email1: str = private_email1 or "No information given ..."
+        self.private_email2: str = private_email2 or "No information given ..."
+        self.office_email: str= office_email or "No information given ..."
+        self.melody: str = melody or "No information given ..."
+        self.other_address: str = other_address or "No information given ..."
+        self.birthday: str = birthday or "No information given ..."
+        self.notes: str = notes or "No information given ..."
         self.spouse: Spouse = spouse or None
-        self.children: List[Child] = children or None
+        self.children: List[Child] = children or list()
         
     def __str__(self) -> str:
-        representation = f"Name: {self.name}\nMobile Phone: {self.mobile_phone}\n"
+        representation = f"Name: {self.name}\nMobile Phone: {self.mobile_phone}\n\n"
         
-        if self.company:
-            representation += f"Company:\n{self.company}\n"
+        if self.company.name is not "":
+            representation += f"Company Details:\n{self.company}\n\n"
+        else:
+            representation += f"Company Details:\nNo company information given ...\n\n"
             
         if self.mobile_phone2:
             representation += f"Mobile Phone 2: {self.mobile_phone2}\n"
@@ -104,7 +106,7 @@ class Contact:
             representation += f"Home Phone: {self.home_phone}\n"
             
         if self.office_phone:
-            representation += f"Office Phone: {self.office_phone}\n"
+            representation += f"Office Phone: {self.office_phone}\n\n"
             
         if self.private_email1:
             representation += f"Private Email 1: {self.private_email1}\n"
@@ -113,7 +115,7 @@ class Contact:
             representation += f"Private Email 2: {self.private_email2}\n"
             
         if self.office_email:
-            representation += f"Office Email: {self.office_email}\n"
+            representation += f"Office Email: {self.office_email}\n\n"
             
         if self.melody:
             representation += f"Melody: {self.melody}\n"
@@ -125,14 +127,16 @@ class Contact:
             representation += f"Birthday: {self.birthday}\n"
             
         if self.notes:
-            representation += f"Note: {self.notes}\n"
+            representation += f"Note: {self.notes}\n\n"
         
         if self.spouse:
-            representation += f"Spouse:\n{self.spouse}\n"
+            representation += f"Spouse Details:\n{self.spouse}\n\n"
         
-        if self.children:
+        if len(self.children) > 0:
             for child in self.children:
-                representation += f"Child:\n{child}\n"
+                representation += f"Child Details:\n{child}\n"
+        else:
+            representation += f"Child Details:\nNo children information given ...\n"
             
         return representation
 
@@ -205,13 +209,14 @@ class ContactBook:
                 spouse = Spouse(row[17], row[18], row[19])
                 children = list()
                 
-                for i in range(-1, 19, -3):
-                    children.append(row[i + 2], row[i + 1], row[i])
+                for i in range(20, len(row), 3):
+                    if i + 2 < len(row):
+                        children.append(Child(row[i], row[i + 1], row[i + 2]))
                     
                 contact = Contact(row[0], row[1], company, row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16], spouse, children)
                 self.add_contact(contact)
                 
-            print(f"\nImporting contacts from {file_path} was succesfull!")
+            print(f"\nImporting contacts from {file_path} ...")
                 
             time.sleep(3)
 
@@ -228,9 +233,12 @@ class ContactBook:
                                  contact.birthday, contact.notes, contact.spouse, contact.children])
 
     def print_contact_list(self):
-        for contact in self.contacts:
-            print(f"{contact}\n")
-        
+        if len(self.contacts) > 0:
+            for contact in self.contacts:
+                print(f"{contact}\n")
+        else:
+            print("No contacts found!\n")
+            
         input("Press any key to continue ...")
 
     def print_contact_details(self, contact, file_path):
@@ -253,8 +261,10 @@ class ContactBook:
             file.write(f"Other Address: {contact.other_address}\n")
             file.write(f"Birthday: {contact.birthday}\n")
             file.write(f"Notes: {contact.notes}\n")
+            
             if contact.spouse_name and contact.spouse_birthday and contact.spouse_notes:
                 file.write(f"Spouse: {contact.spouse.name} {contact.spouse.birthday} {contact.spouse.notes}\n")
+                
             if contact.children:
                 for child in contact.children:
                     file.write(f"Child: {child.name} {child.birthday} {child.notes}\n")
@@ -263,18 +273,31 @@ class ContactBook:
 def main() -> None:
     contact_book = ContactBook()
     clear = lambda: os.system("cls") if os.name == "nt" else os.system("clear")
-    main_screen: str = str("Welcome to the Python 3 CLI Contact List!\n\n")
+    main_screen: str = str("Welcome to the Python 3 CLI Contact Manager!\n\n")
     
     while True:
         clear()
-        print(main_screen + "1) Contact Actions\n2) Group Actions\n3) Exit")
-        choice_layer_1 = str(input("\nEnter a number of choice: """))
+        choice_layer_1 = str(input(main_screen + 
+        "1) Contact Actions\n"
+        "2) Group Actions\n"
+        "3) Exit\n"
+        "\nEnter a number of choice: "))
         
         if choice_layer_1 == "1":
             while True:
                 clear()
-                print(main_screen + "1) Add a new contact\n2) Update an existing contact\n3) Delete an existing contact\n4) Search for an existing contact\n5) Birthday reminders\n6) Import contact list\n7) Export contact list\n8) Print all contacts\n9) Print specific contact\n10) Back")
-                choice_layer_2 = str(input("\nEnter a number of choice: "))
+                choice_layer_2 = str(input(main_screen +
+                "1) Add a new contact\n"
+                "2) Update an existing contact\n"
+                "3) Delete an existing contact\n"
+                "4) Search for an existing contact\n"
+                "5) Birthday reminders\n"
+                "6) Import contact list\n"
+                "7) Export contact list\n"
+                "8) Print all contacts\n"
+                "9) Print specific contact\n"
+                "10) Back\n"
+                "\nEnter a number of choice: "))
                 
                 # Add a new contact
                 if choice_layer_2 == "1":
@@ -291,7 +314,7 @@ def main() -> None:
                     except:
                         for i in range(3, 0, -1):
                             clear()
-                            print(f"Invalid values for either of the required name or mobile number details!\nTry again in {i} seconds ...")
+                            print(f"Invalid personal details!\nTry again in {i} seconds ...")
                             time.sleep(1)
                             
                     if str(input("\nDoes the contact has/works in a company? [Y/N] ")) in ["Yes", "Y", "yes", "y"]:
@@ -306,7 +329,7 @@ def main() -> None:
                         except:
                             for i in range(3, 0, -1):
                                 clear()
-                                print(f"Invalid value for company details!\nTry again in {i} seconds ...")
+                                print(f"Invalid company details!\nTry again in {i} seconds ...")
                                 time.sleep(1)
                         
                     try:
@@ -321,8 +344,11 @@ def main() -> None:
                         contact.address = str(input("[+] Enter address: "))
                         contact.birthday = str(input("[+] Enter birthday: "))
                         contact.notes = str(input("[+] Enter notes: "))
-                    except TypeError:
-                        pass
+                    except:
+                        for i in range(3, 0, -1):
+                            clear()
+                            print(f"Invalid formal details!\nTry again in {i} seconds ...")
+                            time.sleep(1)
                             
                     try:
                         if str(input("\n[+] Does the contact have a spouse? [Y/N] ")) in ["Yes", "Y", "yes", "y"]:
@@ -352,7 +378,7 @@ def main() -> None:
                                     if child.name:
                                         children.append()
                             
-                            if children:
+                            if len(children) > 0:
                                 contact.children = children
                     except:
                         for i in range(3, 0, -1):
@@ -370,27 +396,43 @@ def main() -> None:
                             print(f"Something went wrong!\nTry again in {i} seconds ...")
                             time.sleep(1)
                 
-                # TODO: Update an existing contact
+                # Update an existing contact
                 elif choice_layer_2 == "2":
                     clear()
-                    contact_name = input("Updating an existing contact ...\n\nWhich contact would you wish to update? ")
+                    contact_name = str(input("Updating an existing contact ...\n\nWhich contact would you wish to update? "))
                     contacts = contact_book.search_contacts(contact_name)
                     
                     if len(contacts) > 0:
-                        attribute = int(print("Which contact would you wish to update? "))
-                    else:
-                        clear()
-                        print(f"No contacts with name {contact_name} found!\nTry again in {i} seconds ...")
-                        time.sleep(1)
+                        attribute_type = str(input("Which detail would you wish to update?\n> "))
+                        attribute_value = str(input("New value: "))
+                        contact_book.update_contact(contacts[0], { attribute_type: attribute_value })
+                        print("Contact information updated successfully!")
+                        time.sleep(3)
+                    else:                        
+                        for i in range(3, 0, -1):
+                            clear()
+                            print(f"No contacts with name {contact_name} found!\nTry again in {i} seconds ...")
+                            time.sleep(1)
                         
-                # TODO: Delete an existing contact
+                # Delete an existing contact
                 elif choice_layer_2 == "3":
-                    pass
+                    clear()
+                    contact_name = str(input("Deleting an existing contact ...\n\nWhich contact would you wish to delete? "))
+                    contacts = contact_book.search_contacts(contact_name)
+                    
+                    if len(contacts) > 0:
+                        contact_book.delete_contact(contacts[0])
+                        print("Contact deleted successfully!")
+                        time.sleep(3)
+                    else:                        
+                        for i in range(3, 0, -1):
+                            clear()
+                            print(f"No contacts with name {contact_name} found!\nTry again in {i} seconds ...")
+                            time.sleep(1)
                 
                 # Searh for an existing contact
                 elif choice_layer_2 == "4":
                     clear()
-                    contact_name = input("Updating an existing contact ...\n\nWhich contact would you wish to update? ")
                     results = contact_book.search_contacts(str(input("Searching for an existing contact ...\nEnter contact name: ")))
                     
                     for result in results:
@@ -398,7 +440,7 @@ def main() -> None:
                     else:                        
                         for i in range(3, 0, -1):
                             clear()
-                            print(f"No contacts with name {contact_name} found!\nTry again in {i} seconds ...")
+                            print(f"No contacts with name {results} found!\nTry again in {i} seconds ...")
                             time.sleep(1)
                         
                 elif choice_layer_2 == "5":
@@ -407,19 +449,25 @@ def main() -> None:
                 # Import contact list
                 elif choice_layer_2 == "6":
                     clear()
-                    file_path = str(input("Importing contacts ...\n\nFrom which file would you wish to import contacts?\n> "))
-                    contact_book.import_contacts(file_path)
-                    
-                    # try:
-                    # except:
-                    #     for i in range(3, 0, -1):
-                    #         clear()
-                    #         print(f"Something went wrong!\nTry again in {i} seconds ...")
-                    #         time.sleep(1)
+                    file_path = str(input("Importing contacts from \".csv\" file ...\n\nFrom which file would you wish to import contacts?\n\n(./test.csv) > "))
+                    try:
+                        clear()
+                        file_path = str(input("Importing contacts from \".csv\" file ...\n\nFrom which file would you wish to import contacts?\n\n(./test.csv) > "))
+                        
+                        if file_path:
+                            contact_book.import_contacts(file_path)
+                        else:
+                            contact_book.import_contacts("./test.csv")
+                    except:
+                        for i in range(3, 0, -1):
+                            clear()
+                            print(f"Something went wrong!\nTry again in {i} seconds ...")
+                            time.sleep(1)
                     
                 elif choice_layer_2 == "7":
                     pass
                 elif choice_layer_2 == "8":
+                    clear()
                     contact_book.print_contact_list()
                 elif choice_layer_2 == "9":
                     pass
@@ -435,29 +483,13 @@ def main() -> None:
             print(main_screen + "1) Create a new contact\n2) Update an existing contact\n3) Delete an existing contact\n4) Searh for an existing contac\n5) Birthday reminders\n6) Import contact list\n7) Export contact list\n8) Print all contact\n9) Print specific contact")
         elif choice_layer_1 == "3":
             clear()
-            print("Thank you for using Python 3 CLI Contact List!")
+            print("Thank you for using Python 3 CLI Contact Manager!")
             break
         else:
             for i in range(3, 0, -1):
                 clear()
                 print(f"Invalid choice value!\nTry again in {i} seconds ...")
                 time.sleep(1)
-
-    search_query = input("Enter search query: ")
-    search_results = contact_book.search_contacts(search_query)
-    print(search_results)
-
-    contact_id = input("Enter contact ID to update: ")
-    update_field = input("Enter field to update: ")
-    update_value = input("Enter new value: ")
-    contact_book.update_contact(contact_id, {update_field: update_value})
-
-    contact_list_filename = input("Enter contact list filename: ")
-    contact_book.print_contact_list(contact_list_filename)
-
-    contact_id = input("Enter contact ID to print details: ")
-    contact_details_filename = input("Enter contact details filename: ")
-    contact_book.print_contact_details(contact_id, contact_details_filename)
 
 if __name__ == "__main__":
     main()

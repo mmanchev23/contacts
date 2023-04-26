@@ -442,14 +442,31 @@ def main() -> None:
                             clear()
                             print(f"No contacts with name {results} found!\nTry again in {i} seconds ...")
                             time.sleep(1)
-                        
+                       
+                # Birthday reminder functinality 
                 elif choice_layer_2 == "5":
-                    pass
+                    clear()
+                    today = datetime.date.today()
+                    
+                    print(f"Birthdays reminder: {today}")
+                    
+                    try:
+                        for contact in contact_book.contacts:
+                            birthday = datetime.date(contact.birthday)
+                            delta = birthday - today
+                            
+                            if delta.days < 10:
+                                print(f"{delta.days} to {contact.name}'s birthday ...")
+                            else:
+                                continue
+                    except:
+                        for i in range(3, 0, -1):
+                            clear()
+                            print(f"Something went wrong!\nTry again in {i} seconds ...")
+                            time.sleep(1)
                 
                 # Import contact list
                 elif choice_layer_2 == "6":
-                    clear()
-                    file_path = str(input("Importing contacts from \".csv\" file ...\n\nFrom which file would you wish to import contacts?\n\n(./test.csv) > "))
                     try:
                         clear()
                         file_path = str(input("Importing contacts from \".csv\" file ...\n\nFrom which file would you wish to import contacts?\n\n(./test.csv) > "))
@@ -464,13 +481,44 @@ def main() -> None:
                             print(f"Something went wrong!\nTry again in {i} seconds ...")
                             time.sleep(1)
                     
+                # Export contact list
                 elif choice_layer_2 == "7":
-                    pass
+                    try:
+                        clear()
+                        file_path = str(input("Exporting contacts to \".csv\" file ...\n\nPlease specify a file name?\n\n(./test.csv) > "))
+                        
+                        if file_path:
+                            contact_book.export_contacts(file_path)
+                        else:
+                            contact_book.export_contacts("./test.csv")
+                    except:
+                        for i in range(3, 0, -1):
+                            clear()
+                            print(f"Something went wrong!\nTry again in {i} seconds ...")
+                            time.sleep(1)
+                
+                # Print all contacts
                 elif choice_layer_2 == "8":
                     clear()
                     contact_book.print_contact_list()
+                    
+                # Print specific contact
                 elif choice_layer_2 == "9":
-                    pass
+                    try:
+                        clear()
+                        result = contact_book.search_contacts(str(input("Searching for an existing contact ...\nEnter contact name: ")))
+                        file_path = str(input("Exporting contact to \".csv\" file ...\n\nPlease specify a file name?\n\n(./test.csv) > "))
+                        
+                        if file_path and result:
+                            contact_book.print_contact_details(contact, file_path)
+                        else:
+                            contact_book.print_contact_details(contact, "./test.csv")
+                    except:
+                        for i in range(3, 0, -1):
+                            clear()
+                            print(f"Something went wrong!\nTry again in {i} seconds ...")
+                            time.sleep(1)
+                
                 elif choice_layer_2 == "10":
                     break
                 else:

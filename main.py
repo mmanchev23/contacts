@@ -145,6 +145,7 @@ class ContactBook:
     
     def __init__(self):
         self.contacts = []
+        self.groups = {}
 
     def add_contact(self, contact):
         self.contacts.append(contact)
@@ -167,28 +168,6 @@ class ContactBook:
 
     def delete_contact(self, contact):
         self.contacts.remove(contact)
-
-    def create_contact_group(self, group_name):
-        group = []
-        setattr(self, group_name, group)
-
-    def add_contact_to_group(self, contact, group_name):
-        if hasattr(self, group_name):
-            group = getattr(self, group_name)
-            group.append(contact)
-        else:
-            print("Group not found.")
-
-    def delete_contact_from_group(self, contact, group_name):
-        if hasattr(self, group_name):
-            group = getattr(self, group_name)
-            
-            if contact in group:
-                group.remove(contact)
-            else:
-                print("Contact not found in the group.")
-        else:
-            print("Group not found.")
 
     def get_birthday_reminders(self):
         today = datetime.now().strftime("%m/%d")
@@ -243,31 +222,63 @@ class ContactBook:
 
     def print_contact_details(self, contact, file_path):
         with open(file_path, "w") as file:
-            file.write("Contact Details:\n")
-            file.write(f"Name: {contact.name}\n")
-            file.write(f"Mobile Phone: {contact.mobile_phone}\n")
-            file.write(f"Company Name: {contact.company_name}\n")
-            file.write(f"Occupation: {contact.company_occupation}\n")
-            file.write(f"Address: {contact.company_address}\n")
-            file.write(f"Website: {contact.company_web_page}\n")
-            file.write(f"Mobile Phone 2: {contact.mobile_phone2}\n")
-            file.write(f"Mobile Phone 3: {contact.mobile_phone3}\n")
-            file.write(f"Home Phone: {contact.home_phone}\n")
-            file.write(f"Office Phone: {contact.office_phone}\n")
-            file.write(f"Private Email 1: {contact.private_email1}\n")
-            file.write(f"Private Email 2: {contact.private_email2}\n")
-            file.write(f"Office Email: {contact.office_email}\n")
-            file.write(f"Melody: {contact.melody}\n")
-            file.write(f"Other Address: {contact.other_address}\n")
-            file.write(f"Birthday: {contact.birthday}\n")
-            file.write(f"Notes: {contact.notes}\n")
+            print("Contact Details:\n")
+            print(f"Name: {contact.name}\n")
+            print(f"Mobile Phone: {contact.mobile_phone}\n")
+            print(f"Company Name: {contact.company_name}\n")
+            print(f"Occupation: {contact.company_occupation}\n")
+            print(f"Address: {contact.company_address}\n")
+            print(f"Website: {contact.company_web_page}\n")
+            print(f"Mobile Phone 2: {contact.mobile_phone2}\n")
+            print(f"Mobile Phone 3: {contact.mobile_phone3}\n")
+            print(f"Home Phone: {contact.home_phone}\n")
+            print(f"Office Phone: {contact.office_phone}\n")
+            print(f"Private Email 1: {contact.private_email1}\n")
+            print(f"Private Email 2: {contact.private_email2}\n")
+            print(f"Office Email: {contact.office_email}\n")
+            print(f"Melody: {contact.melody}\n")
+            print(f"Other Address: {contact.other_address}\n")
+            print(f"Birthday: {contact.birthday}\n")
+            print(f"Notes: {contact.notes}\n")
             
             if contact.spouse_name and contact.spouse_birthday and contact.spouse_notes:
-                file.write(f"Spouse: {contact.spouse.name} {contact.spouse.birthday} {contact.spouse.notes}\n")
+                print(f"Spouse: {contact.spouse.name} {contact.spouse.birthday} {contact.spouse.notes}\n")
                 
             if contact.children:
                 for child in contact.children:
-                    file.write(f"Child: {child.name} {child.birthday} {child.notes}\n")
+                    print(f"Child: {child.name} {child.birthday} {child.notes}\n")
+
+    def create_contact_group(self, group_name):
+        self.groups[group_name] = []
+
+    def add_contact_to_group(self, contact, group_name):
+        if self.groups[group_name]:
+            self.groups[group_name].append(contact)
+        else:
+            print("Group not found.")
+
+    def delete_contact_from_group(self, contact, group_name):
+        if hasattr(self, group_name):
+            group = getattr(self, group_name)
+            
+            if contact in group:
+                group.remove(contact)
+            else:
+                print("Contact not found in the group.")
+        else:
+            print("Group not found.")
+            
+    def print_contact_groups(self):
+        if len(self.groups) > 0:
+            for group_name, group in self.groups.items:
+                print(group_name)
+                
+                for contact in group:
+                    print(contact)
+                
+            input("Press any key to continue ...")
+        else:
+            print("No contact groups!")
 
 
 def main() -> None:
@@ -283,6 +294,7 @@ def main() -> None:
         "3) Exit\n"
         "\nEnter a number of choice: "))
         
+        # Contact Actions
         if choice_layer_1 == "1":
             while True:
                 clear()
@@ -526,9 +538,86 @@ def main() -> None:
                         clear()
                         print(f"Invalid choice value!\nTry again in {i} seconds ...")
                         time.sleep(1)              
+        
+        # Group Actions
         elif choice_layer_1 == "2":
-            clear()
-            print(main_screen + "1) Create a new contact\n2) Update an existing contact\n3) Delete an existing contact\n4) Searh for an existing contac\n5) Birthday reminders\n6) Import contact list\n7) Export contact list\n8) Print all contact\n9) Print specific contact")
+            while True:
+                clear()
+                choice_layer_2 = str(input(main_screen +
+                "1) Create a new contact group\n"
+                "2) Add an existing contact to a group\n"
+                "3) Delete an existing contact from a group\n"
+                "4) Print all contact groups\n"
+                "5) Back\n"
+                "\nEnter a number of choice: "))
+                
+                # Create new contact group
+                if choice_layer_2 == "1":
+                    try:
+                        clear()
+                        contact_group_name = str(input("How would you like to name the group?\n\nEnter group name: "))
+                        contact_book.create_contact_group(contact_group_name)
+                        for i in range(3, 0, -1):
+                            clear()
+                            print(f"Successfully created a contact group \"{contact_group_name}\"!\nRedirecting back in {i} seconds ...")
+                            time.sleep(1)
+                    except:
+                        for i in range(3, 0, -1):
+                            clear()
+                            print(f"Something went wrong!\nTry again in {i} seconds ...")
+                            time.sleep(1)
+                
+                elif choice_layer_2 == "2":
+                    try:
+                        clear()
+                        contact_name = str(input("What't the name of your contacts?\n\nEnter contact name: "))
+                        contact_group_name = str(input("How would you like to name the group?\n\nEnter group name: "))
+                        contact_book.add_contact_to_group(contact_name, contact_group_name)
+                        for i in range(3, 0, -1):
+                            clear()
+                            print(f"Successfully added {contact_name} to a contact group \"{contact_group_name}\"!\nRedirecting back in {i} seconds ...")
+                            time.sleep(1)
+                    except:
+                        for i in range(3, 0, -1):
+                            clear()
+                            print(f"Something went wrong!\nTry again in {i} seconds ...")
+                            time.sleep(1)
+                
+                elif choice_layer_2 == "3":
+                    try:
+                        clear()
+                        contact_name = str(input("What't the name of your contacts?\n\nEnter contact name: "))
+                        contact_group_name = str(input("How would you like to name the group?\n\nEnter group name: "))
+                        contact_book.delete_contact_from_group(contact_name, contact_group_name)
+                        for i in range(3, 0, -1):
+                            clear()
+                            print(f"Successfully added {contact_name} to a contact group \"{contact_group_name}\"!\nRedirecting back in {i} seconds ...")
+                            time.sleep(1)
+                    except:
+                        for i in range(3, 0, -1):
+                            clear()
+                            print(f"Something went wrong!\nTry again in {i} seconds ...")
+                            time.sleep(1)
+                            
+                elif choice_layer_2 == "4":
+                    try:
+                        clear()
+                        contact_book.print_contact_groups()
+                    except:
+                        for i in range(3, 0, -1):
+                            clear()
+                            print(f"Something went wrong!\nTry again in {i} seconds ...")
+                            time.sleep(1)
+                                                
+                elif choice_layer_2 == "5":
+                    break
+                else:
+                    for i in range(3, 0, -1):
+                        clear()
+                        print(f"Invalid choice value!\nTry again in {i} seconds ...")
+                        time.sleep(1) 
+        
+        # Exit
         elif choice_layer_1 == "3":
             clear()
             print("Thank you for using Python 3 CLI Contact Manager!")
